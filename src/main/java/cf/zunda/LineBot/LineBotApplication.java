@@ -21,14 +21,4 @@ public class LineBotApplication {
 		SpringApplication.run(LineBotApplication.class, args);
 	}
 
-	@EventMapping
-	public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event){
-		log.info("event : " + event);
-		return new TextMessage(event.getMessage().getText());
-	}
-
-	@EventMapping
-	public void handleDefaultMessageEvent(Event event){
-		log.info("event : " + event);
-	}
 }
