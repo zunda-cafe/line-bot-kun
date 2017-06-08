@@ -1,6 +1,12 @@
 # line-bot-kun
 LINE Botのお試し。 based on SpringBoot.
 
+### How to boot on local
+```
+# mvn clean package
+# mvn spring-boot:run -D CHANNEL_SECRET=key -D CHANNEL_TOKEN=key
+```
+
 ### アクセストークン、シークレットキーの取得
 applicaton.properties に埋め込むわけにいかないので、herokuの機能を利用。
 
