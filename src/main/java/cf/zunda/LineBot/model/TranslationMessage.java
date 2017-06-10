@@ -19,4 +19,11 @@ public class TranslationMessage {
 
     /** TranslationAPIに投げる翻訳対象メッセージ */
     private String Message;
+
+    /** 翻訳する先の言語 exp: ja,en */
+    private String translateTo;
+
+    public final String TLANSLATE_EN = "en";
+    public final String TLANSLATE_JP = "ja";
+
 }

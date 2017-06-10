@@ -22,11 +22,14 @@ public class LineBotController {
 
     private TranslationService translationService;
 
-    /** ただの文字列はここで受ける */
+    /** テキストメッセージはここで受ける */
     @EventMapping
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event){
         log.info("event : " + event);
-        return new TextMessage(event.getMessage().getText());
+
+        // LINEで受け取ったテキストメッセージを翻訳して返す
+        String translated = translationService.translationMessage(event.getMessage().getText());
+        return new TextMessage(translated);
     }
 
     @EventMapping

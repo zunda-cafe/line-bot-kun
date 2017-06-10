@@ -11,8 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
- * @author ykonno.
- * @since 2017/06/09.
+ * {@inheritDoc}
  */
 @Service
 @Slf4j
@@ -23,20 +22,19 @@ public class TranslationServiceImpl implements TranslationService {
 
     private final TranslationRestRepository translationRestRepository;
 
-
-
     @Override
     public String translationMessage(String message) {
 
         AzureToken azureToken = azureTokenRestRepository.prepareCognitiveToken();
 
+        // CognitiveServiceを使うための認証情報と翻訳対象メッセージをまとめる
         TranslationMessage translationMessage = TranslationMessage.builder()
                 .azureToken(azureToken)
                 .Message(message)
                 .build();
 
-        String translate = translationRestRepository.translate(translationMessage);
+        String translated = translationRestRepository.translate(translationMessage);
 
-        return null;
+        return translated;
     }
 }
