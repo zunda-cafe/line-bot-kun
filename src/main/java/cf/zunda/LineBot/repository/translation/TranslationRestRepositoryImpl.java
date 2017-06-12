@@ -1,7 +1,6 @@
 package cf.zunda.LineBot.repository.translation;
 
 import cf.zunda.LineBot.model.TranslationMessage;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.RequestEntity;
@@ -17,13 +16,13 @@ import java.net.URI;
  */
 @Component
 @Slf4j
-@AllArgsConstructor
+@lombok.RequiredArgsConstructor
 public class TranslationRestRepositoryImpl implements TranslationRestRepository {
 
-    private RestOperations restOperations;
+    private final RestOperations restOperations;
 
     @Value("azure.translate.Endpoint")
-    private final String TRANSLATE_API_ENDPOINT;
+    private String TRANSLATE_API_ENDPOINT;
 
     @Override
     public String translate(TranslationMessage translationMessage) {

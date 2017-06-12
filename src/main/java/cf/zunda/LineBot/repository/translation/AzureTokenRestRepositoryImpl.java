@@ -15,16 +15,16 @@ import java.net.URI;
  */
 @Component
 @Slf4j
-@lombok.AllArgsConstructor
+@lombok.RequiredArgsConstructor
 public class AzureTokenRestRepositoryImpl implements AzureTokenRestRepository {
 
-    private RestOperations restOperations;
+    private final RestOperations restOperations;
 
     @Value("azure.cognitive.Endpoint")
-    private final String TOKEN_ENDPOINT;
+    private String TOKEN_ENDPOINT;
 
     @Value("azure.cognitive.SubscriptionKey")
-    private final String TOKEN_SUBSCRIPTION_KEY;
+    private String TOKEN_SUBSCRIPTION_KEY;
 
     @Override
     public AzureToken prepareCognitiveToken(){
