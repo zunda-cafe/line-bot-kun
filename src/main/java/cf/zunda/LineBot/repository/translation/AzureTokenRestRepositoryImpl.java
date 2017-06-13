@@ -20,10 +20,10 @@ public class AzureTokenRestRepositoryImpl implements AzureTokenRestRepository {
 
     private final RestOperations restOperations;
 
-    @Value("azure.cognitive.Endpoint")
+    @Value("${azure.cognitive.Endpoint}")
     private String TOKEN_ENDPOINT;
 
-    @Value("azure.cognitive.SubscriptionKey")
+    @Value("${azure.cognitive.SubscriptionKey}")
     private String TOKEN_SUBSCRIPTION_KEY;
 
     @Override

@@ -6,5 +6,5 @@ package cf.zunda.LineBot.service.translation;
  */
 public interface TranslationService {
 
-    public String translationMessage(String message);
+    String translationMessage(String message);
 }

@@ -21,7 +21,7 @@ public class TranslationRestRepositoryImpl implements TranslationRestRepository 
 
     private final RestOperations restOperations;
 
-    @Value("azure.translate.Endpoint")
+    @Value("${azure.translate.Endpoint}")
     private String TRANSLATE_API_ENDPOINT;
 
     @Override
