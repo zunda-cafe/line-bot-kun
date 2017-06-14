@@ -1,5 +1,6 @@
 package cf.zunda.LineBot.repository.translation;
 
+import cf.zunda.LineBot.model.TranslatedMessage;
 import cf.zunda.LineBot.model.TranslationMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +12,8 @@ import org.springframework.web.client.RestOperations;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLEncoder;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author ykonno.
@@ -50,10 +53,18 @@ public class TranslationRestRepositoryImpl implements TranslationRestRepository 
                 .build();
 
         // APIにメッセージを認証情報付きで投げる
+        // ResponseEntity<TranslatedMessage> responseEntity = restOperations.exchange(requestEntity, TranslatedMessage.class);
         ResponseEntity<String> responseEntity = restOperations.exchange(requestEntity, String.class);
 
-        // ResponseのXMLをどうにかする
-        String translated = responseEntity.getBody();
+        // ResponseのXMLから翻訳後部分を切り出す
+        String regex = ">(.+)<";
+        Pattern p = Pattern.compile(regex);
+        Matcher matcher = p.matcher(responseEntity.getBody());
+
+        String translated = "";
+        if (matcher.find()) {
+            translated = matcher.group(1);
+        }
 
         return translated;
     }

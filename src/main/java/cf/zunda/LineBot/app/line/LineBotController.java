@@ -29,7 +29,7 @@ public class LineBotController {
 
         // LINEで受け取ったテキストメッセージを翻訳して返す
         String translated = translationService.translationMessage(event.getMessage().getText());
-        return new TextMessage("翻訳したよ : " + translated);
+        return new TextMessage("翻訳したよ!" + System.lineSeparator() + translated);
     }
 
     @EventMapping
