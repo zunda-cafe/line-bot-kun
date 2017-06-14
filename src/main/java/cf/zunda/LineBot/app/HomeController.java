@@ -28,8 +28,8 @@ public class HomeController {
     public String translate(Model model, @RequestParam("text")String text){
         String translated = translationService.translationMessage(text);
 
-        model.addAttribute("translated", text);
-        return "translate complete";
+        model.addAttribute("translated", translated);
+        return "translate complete \n 翻訳後は " + translated;
     }
 
 }

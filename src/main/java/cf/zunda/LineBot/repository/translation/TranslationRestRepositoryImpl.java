@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestOperations;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URLEncoder;
 
 /**
  * @author ykonno.
@@ -27,13 +29,24 @@ public class TranslationRestRepositoryImpl implements TranslationRestRepository 
     @Override
     public String translate(TranslationMessage translationMessage) {
 
-        // TODO：翻訳先の言語を判定する。暫定で英語固定
         TranslationMessage judgedMessage = judgeTranslateTo(translationMessage);
 
-        String query = String.format("?appid=&text=%s&to=%s", judgedMessage.getMessage(), judgedMessage.getTranslateTo());
+        String encoded = "";
+        try {
+            encoded = URLEncoder.encode(judgedMessage.getMessage(), "UTF-8").replace("+", "%20");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        String query = String.format("appid=Bearer %s&text=%s&to=%s"
+                , judgedMessage.getAzureToken().getAuthorizationBearer(), encoded, judgedMessage.getTranslateTo());
+        String parameter = "";
+
+        log.info("生のURL : " + TRANSLATE_API_ENDPOINT + query);
+
+        parameter = query.replace("+", "%20").replace(" ", "%20");
         RequestEntity<Void> requestEntity = RequestEntity
-                .get(URI.create(TRANSLATE_API_ENDPOINT + query))
-                .header("Authorization", "Baerer : " + judgedMessage.getAzureToken().getAuthorizationBearer())
+                .get(URI.create(TRANSLATE_API_ENDPOINT + "?" + parameter))
                 .build();
 
         // APIにメッセージを認証情報付きで投げる
@@ -47,11 +60,13 @@ public class TranslationRestRepositoryImpl implements TranslationRestRepository 
 
     /**
      * どの言語に翻訳するか、元メッセージを元に判定します。
+     *
      * @param translationMessage 翻訳対象メッセージ
      * @return 翻訳先言語を設定したメッセージDTO
      */
-    private TranslationMessage judgeTranslateTo(TranslationMessage translationMessage){
-        translationMessage.setTranslateTo(translationMessage.TLANSLATE_EN);
+    private TranslationMessage judgeTranslateTo(TranslationMessage translationMessage) {
+        // TODO：翻訳先の言語を判定する。暫定で英語固定
+        translationMessage.setTranslateTo(TranslationMessage.TLANSLATE_EN);
         return translationMessage;
     }
 

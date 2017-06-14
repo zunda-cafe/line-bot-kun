@@ -1,4 +1,4 @@
-package cf.zunda.LineBot.app;
+package cf.zunda.LineBot.app.line;
 
 import cf.zunda.LineBot.service.translation.TranslationService;
 import com.linecorp.bot.model.event.Event;
@@ -29,7 +29,7 @@ public class LineBotController {
 
         // LINEで受け取ったテキストメッセージを翻訳して返す
         String translated = translationService.translationMessage(event.getMessage().getText());
-        return new TextMessage(translated);
+        return new TextMessage("翻訳したよ : " + translated);
     }
 
     @EventMapping

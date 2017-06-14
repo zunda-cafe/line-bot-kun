@@ -18,6 +18,8 @@ import java.net.Proxy;
 @Configuration
 public class LineBotConfig {
 
+    /** 実行時引数でプロキシを指定
+     * ex: --PROXY_WORK=proxy.co.jp */
     @Value("${PROXY_WORK}")
     private String proxyUri;
 
@@ -27,7 +29,8 @@ public class LineBotConfig {
         return new RestTemplate();
     }
 
-    /** work環境でプロキシを通す。 */
+    /** work環境でプロキシを通す
+     * --spring.profiles.active=work で指定 */
     @Bean
     @Profile("work")
     RestTemplate restTemplateOnWork(){

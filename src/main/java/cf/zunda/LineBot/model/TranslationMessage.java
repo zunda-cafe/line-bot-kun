@@ -23,7 +23,7 @@ public class TranslationMessage {
     /** 翻訳する先の言語 exp: ja,en */
     private String translateTo;
 
-    public final String TLANSLATE_EN = "en";
-    public final String TLANSLATE_JP = "ja";
+    public static final String TLANSLATE_EN = "en";
+    public static final String TLANSLATE_JP = "ja";
 
 }
