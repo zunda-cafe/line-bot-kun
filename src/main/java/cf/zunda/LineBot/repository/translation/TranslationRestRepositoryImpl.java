@@ -30,7 +30,7 @@ public class TranslationRestRepositoryImpl implements TranslationRestRepository 
         // TODO：翻訳先の言語を判定する。暫定で英語固定
         TranslationMessage judgedMessage = judgeTranslateTo(translationMessage);
 
-        String query = String.format("?text=%s&to=%s", judgedMessage.getMessage(), judgedMessage.getTranslateTo());
+        String query = String.format("?appid=&text=%s&to=%s", judgedMessage.getMessage(), judgedMessage.getTranslateTo());
         RequestEntity<Void> requestEntity = RequestEntity
                 .get(URI.create(TRANSLATE_API_ENDPOINT + query))
                 .header("Authorization", "Baerer : " + judgedMessage.getAzureToken().getAuthorizationBearer())

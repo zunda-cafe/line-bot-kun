@@ -31,7 +31,7 @@ public class AzureTokenRestRepositoryImpl implements AzureTokenRestRepository {
 
 
         RequestEntity<Void> requestEntity = RequestEntity
-                .get(URI.create(TOKEN_ENDPOINT))
+                .post(URI.create(TOKEN_ENDPOINT))
                 .header("Ocp-Apim-Subscription-Key", TOKEN_SUBSCRIPTION_KEY)
                 .build();
 
