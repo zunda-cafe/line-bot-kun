@@ -40,7 +40,8 @@ azure.cognitive.SubscriptionKey=${AZURE_SUBSCRIPTION_KEY}
 ### LINEの管理
 作成したLINEアカウントの管理画面
 * [LINE BUSINESS CENTER](https://business.line.me/ja/companies/1460544/accounts?ownerType=company&roleType=operator)
-* ![https://scdn.line-apps.com/n/line_add_friends/btn/ja.png](https://line.me/R/ti/p/%40wlj3544j)
+
+[![友達に追加](https://scdn.line-apps.com/n/line_add_friends/btn/ja.png)](https://line.me/R/ti/p/%40wlj3544j)
 
 以下のリンクがある
 * [LINE@ MANAGER](https://admin-official.line.me/8555323/account/)
