@@ -53,8 +53,10 @@ public class TranslationRestRepositoryImpl implements TranslationRestRepository 
                 .build();
 
         // APIにメッセージを認証情報付きで投げる
-        // ResponseEntity<TranslatedMessage> responseEntity = restOperations.exchange(requestEntity, TranslatedMessage.class);
         ResponseEntity<String> responseEntity = restOperations.exchange(requestEntity, String.class);
+
+        // TODO:MessageConverterでXMLにしたい。。
+        // ResponseEntity<TranslatedMessage> responseEntity = restOperations.exchange(requestEntity, TranslatedMessage.class);
 
         // ResponseのXMLから翻訳後部分を切り出す
         String regex = ">(.+)<";

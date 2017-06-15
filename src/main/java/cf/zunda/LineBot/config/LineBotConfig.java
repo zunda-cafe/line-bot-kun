@@ -18,9 +18,9 @@ import java.net.Proxy;
 @Configuration
 public class LineBotConfig {
 
-    /** 実行時引数でプロキシを指定
+    /** 必要なら実行時にプロキシを指定
      * ex: --PROXY_WORK=proxy.co.jp */
-    @Value("${PROXY_WORK}")
+    @Value("${PROXY_WORK:none}")
     private String proxyUri;
 
     @Bean
