@@ -1,5 +1,6 @@
-package cf.zunda.LineBot.model;
+package cf.zunda.LineBot.model.translation;
 
+import cf.zunda.LineBot.model.translation.AzureToken;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

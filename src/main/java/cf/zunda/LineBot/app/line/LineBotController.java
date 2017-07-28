@@ -1,6 +1,6 @@
 package cf.zunda.LineBot.app.line;
 
-import cf.zunda.LineBot.service.translation.TranslationService;
+import cf.zunda.LineBot.service.LineBotService;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
@@ -20,16 +20,16 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class LineBotController {
 
-    private final TranslationService translationService;
+    private final LineBotService lineBotService;
 
     /** テキストメッセージはここで受ける */
     @EventMapping
     public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event){
         log.info("event : " + event);
 
-        // LINEで受け取ったテキストメッセージを翻訳して返す
-        String translated = translationService.translationMessage(event.getMessage().getText());
-        return new TextMessage("翻訳したよ!" + System.lineSeparator() + translated);
+        // LINEで受け取ったテキストメッセージを選択したサービスで処理して返す
+        String processedMsg = lineBotService.replyMessage(event.getMessage().getText());
+        return new TextMessage(processedMsg);
     }
 
     @EventMapping

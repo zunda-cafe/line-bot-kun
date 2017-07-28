@@ -1,9 +1,9 @@
 package cf.zunda.LineBot.repository.translation;
 
-import cf.zunda.LineBot.model.TranslatedMessage;
-import cf.zunda.LineBot.model.TranslationMessage;
+import cf.zunda.LineBot.model.translation.TranslationMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
  * @author ykonno.
  * @since 2017/06/09.
  */
+@Profile("translation")
 @Component
 @Slf4j
 @lombok.RequiredArgsConstructor

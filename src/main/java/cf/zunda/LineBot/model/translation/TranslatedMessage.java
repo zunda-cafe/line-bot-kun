@@ -1,4 +1,4 @@
-package cf.zunda.LineBot.model;
+package cf.zunda.LineBot.model.translation;
 
 import lombok.Data;
 

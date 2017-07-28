@@ -1,6 +1,6 @@
 package cf.zunda.LineBot.repository.translation;
 
-import cf.zunda.LineBot.model.AzureToken;
+import cf.zunda.LineBot.model.translation.AzureToken;
 
 /**
  * Description: Azure Cognitive Service のWebService.

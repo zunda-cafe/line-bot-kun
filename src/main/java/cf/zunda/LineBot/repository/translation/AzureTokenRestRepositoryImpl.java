@@ -1,8 +1,9 @@
 package cf.zunda.LineBot.repository.translation;
 
-import cf.zunda.LineBot.model.AzureToken;
+import cf.zunda.LineBot.model.translation.AzureToken;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import java.net.URI;
 /**
  * {@inheritDoc}
  */
+@Profile("translation")
 @Component
 @Slf4j
 @lombok.RequiredArgsConstructor

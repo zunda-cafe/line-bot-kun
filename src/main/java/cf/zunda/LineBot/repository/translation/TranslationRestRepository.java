@@ -1,6 +1,6 @@
 package cf.zunda.LineBot.repository.translation;
 
-import cf.zunda.LineBot.model.TranslationMessage;
+import cf.zunda.LineBot.model.translation.TranslationMessage;
 
 /**
  * Description: Microsoft Translation API を扱うWebService．

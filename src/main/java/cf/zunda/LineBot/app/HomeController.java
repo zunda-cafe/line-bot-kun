@@ -1,8 +1,7 @@
 package cf.zunda.LineBot.app;
 
-import cf.zunda.LineBot.service.translation.TranslationService;
+import cf.zunda.LineBot.service.LineBotService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class HomeController {
 
-    final TranslationService translationService;
+    final LineBotService lineBotService;
 
     @RequestMapping("/")
     public String home(Model model){
@@ -26,10 +25,10 @@ public class HomeController {
 
     @RequestMapping("trans")
     public String translate(Model model, @RequestParam("text")String text){
-        String translated = translationService.translationMessage(text);
+        String translated = lineBotService.replyMessage(text);
 
         model.addAttribute("translated", translated);
-        return "translate complete \n 翻訳後は " + translated;
+        return translated;
     }
 
 }
