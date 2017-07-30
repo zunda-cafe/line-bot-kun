@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author NGN5.
+ * HTTPリクエスト経由で動作確認するためのコントローラ
+ * @author ykonno.
  * @since 2017/06/13.
  */
 @RestController

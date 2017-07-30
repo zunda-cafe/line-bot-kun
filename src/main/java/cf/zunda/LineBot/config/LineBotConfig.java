@@ -23,20 +23,26 @@ public class LineBotConfig {
     @Value("${PROXY_WORK:none}")
     private String proxyUri;
 
+    /** プロキシのポート
+     * デフォルト：8080 */
+    @Value("${PROXY_PORT:8080}")
+    private String proxyPort;
+
+    @Profile("!work")
     @Bean
-    @Profile("default")
     RestTemplate restTemplate(){
         return new RestTemplate();
     }
 
     /** work環境でプロキシを通す
-     * --spring.profiles.active=work で指定 */
-    @Bean
+     * --spring.profiles.active=work で有効化 */
     @Profile("work")
+    @Bean
     RestTemplate restTemplateOnWork(){
         SimpleClientHttpRequestFactory httpRequestFactory = new SimpleClientHttpRequestFactory();
         httpRequestFactory.setProxy(
-                new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxyUri,8080)));
+                new Proxy(Proxy.Type.HTTP
+                        , new InetSocketAddress(proxyUri,Integer.getInteger(proxyPort))));
         return new RestTemplate(httpRequestFactory);
     }
 }

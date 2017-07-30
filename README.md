@@ -1,32 +1,59 @@
 # line-bot-kun
-LINE Botのお試し。 based on SpringBoot.
+LINE Bot基盤 based on SpringBoot.  
+複数のボット実装と共に。
 
-## How to develop, boot
-**herokuの追加**
+## How to develop  
+**実装クラスの追加**
+このBotは起動時のプロファイル指定で機能を切り替えることができる。  
+現在使用できるのは 翻訳：`translation`, ぐるなび(未実装)：`gnavi`
+
+指定したプロファイルに対応する実装クラスをService,Repositoryに追加する。  
+`LineBotController`が共通してLINEプラットフォームからメッセージを受け取る。
+その内容を`LineBotService`を実装したクラスへ渡す。
+```java
+@LineMessageHandler
+@RequiredArgsConstructor
+public class LineBotController {
+    private final LineBotService lineBotService;
+
+    @EventMapping public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event){
+        String msg = lineBotService.replyMessage(event.getMessage().getText());
+        return new TextMessage(processedMsg);
+    }
+```
+
+この時、`lineBotService`にインジェクションされるBeanはProfileにより切り替わる。
+```java
+
+@Profile("translation")
+@Service
+public class TranslationServiceImpl implements LineBotService {
+```
+上記のように、`@Profile`を付けたService(必要ならRepositoryも)を作成する。
+
+## How to boot
+**起動に必要なプロパティ**  
+propertiesファイルに埋め込むとGithub上でオープンになってしまうため、実行時・環境変数で指定する方式とした。  
+
+| key                    | value                                 | 必須？                |
+|------------------------|---------------------------------------|-----------------------|
+| CHANNEL_SECRET         | LINEdeveloperのシークレットキー       | required              |
+| CHANNEL_TOKEN          | 〃のアクセストークン                  | required              |
+| AZURE_SUBSCRIPTION_KEY | Azureのリソース管理画面から取れるキー | optional(translation) |
+
+**指定および起動方法(例)**
+```
+# export CHANNEL_SECRET=key
+# mvn spring-boot:run --spring.profiles.active=translation
+```
+**herokuへのデプロイ [・参考](https://devcenter.heroku.com/articles/config-vars#setting-up-config-vars-for-a-deployed-application)**  
+あらかじめheroku側でAPPを作成し、その環境へ設定の上、pushします。
 ```
 # git clone git@github.com:maruhachi/line-bot-kun.git
 # heroku git:remote --app APPNAME
+# heroku config:set KEY=VALUE
+# git push heroku master
 ```
-
-**必要とするトークンを環境変数で渡す**
-```
-# export CHANNEL_SECRET=key
-# export CHANNEL_TOKEN=key
-# export AZURE_SUBSCRIPTION_KEY=toolongkey
-# mvn spring-boot:run
-# # if behind proxy
-# export WORK_PROXY=proxy.host; mvn spring-boot:run -Drun.profiles=work
-```
-
-### アクセストークン、シークレットキーの取得
-applicaton.properties に埋め込むわけにいかないので、herokuの機能を利用。
-
-```application.properties
-line.bot.channelSecret=${CHANNEL_SECRET}
-line.bot.channelToken=${CHANNEL_TOKEN}
-azure.cognitive.SubscriptionKey=${AZURE_SUBSCRIPTION_KEY}
-```
-上記の通り設定しておき、herokuの環境変数で置き換える。 ⇒ [ここをみた](https://devcenter.heroku.com/articles/config-vars#setting-up-config-vars-for-a-deployed-application)
 
 ## LINE@のBot利用
 
@@ -58,10 +85,11 @@ azure.cognitive.SubscriptionKey=${AZURE_SUBSCRIPTION_KEY}
 * [Qiita - Microsoft Translation APIを使ってみた](http://qiita.com/helicalgear/items/d34fac20d68f17e75406#azure)
 
 用意したAPIを呼ぶ流れ
+
 * CognitiveService共通のトークンを発行してもらう
-  * [OAuth token API reference](http://docs.microsofttranslator.com/oauth-token.html#!/Authentication_token_service/getToken)
+  - [OAuth token API reference](http://docs.microsofttranslator.com/oauth-token.html#!/Authentication_token_service/getToken)
 * TranslationAPIへ上記トークンをつけてRequest
-  * [Translation API reference](http://docs.microsofttranslator.com/text-translate.html#!/default/get_Translate)
+  - [Translation API reference](http://docs.microsofttranslator.com/text-translate.html#!/default/get_Translate)
 
 しかし、ここまでやって得られるResponseは`<string honyarara="url">afterTranslate</string>`とかいう謎XML  
 扱いに困り、暫定で正規表現で取り出してる。

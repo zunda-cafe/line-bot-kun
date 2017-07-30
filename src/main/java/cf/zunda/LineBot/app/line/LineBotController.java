@@ -20,6 +20,10 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class LineBotController {
 
+    /**
+     *  実装クラスは指定されたProfileで切り替わる
+     *  ex: translation, gnavi.
+     */
     private final LineBotService lineBotService;
 
     /** テキストメッセージはここで受ける */
